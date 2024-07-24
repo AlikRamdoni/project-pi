@@ -1,0 +1,18 @@
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        width: 25%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sidebar {
+        width: 16.666667%;
+    }
+}
