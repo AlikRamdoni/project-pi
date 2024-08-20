@@ -32,7 +32,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('/product', [ProductController::class, 'store'])->name('products.store');
     Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
+    Route::get('/result', [TransactionController::class, 'index'])->name('result.index');
     Route::get('/transactions', [TransactionController::class, 'get'])->name(('transactions'));
+    Route::get('/transactions/delete/{userId}/t/{totalPrice}', [TransactionController::class, 'destroyTransactionByUserId'])->name('transactions.destroy');
+    Route::get('/transactions/{userId}', [TransactionController::class, 'getDetailTransaction'])->name('transactions');
 });
 
 Route::get('/find', function () {
@@ -41,7 +44,7 @@ Route::get('/find', function () {
 
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
-
+Route::get('/result/index', [TransactionController::class, 'index'])->name('report.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

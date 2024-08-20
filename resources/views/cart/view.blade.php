@@ -70,7 +70,7 @@
         <div x-show="isOpen" class="fixed inset-0 overflow-y-auto px-4 py-6 bg-gray-900 bg-opacity-50 z-50 flex items-center justify-center">
             <div x-show.transition.opacity.duration.300ms="isOpen" class="bg-white rounded-lg shadow-lg overflow-hidden max-w-2xl w-full">
                 <div class="px-6 py-4">
-                    <h2 class="text-xl font-semibold mb-4">Detail Pembayaran</h2>
+                    <h2 class="text-xl font-semibold mb-4">Detail Pemesanan</h2>
                     @if ($cartItems->count() > 0)
                     <div>
                         <table class="min-w-full">
@@ -120,8 +120,7 @@
                     @endif
                 </div>
                 <div class="px-6 py-4 bg-gray-100 flex justify-end">
-                    <button @click="isOpen = false" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-2">Tutup</button>
-                    <button @click="isOpen = false" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-2">Tutup</button>
+                    <button @click="isOpen = false" class="bg-red-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mr-2">Tutup</button>
                 </div>
             </div>
         </div>
@@ -135,3 +134,15 @@
     </div>
 </div>
 @endsection
+
+<style>
+    /* CSS untuk menyembunyikan spinner (tombol up dan down) pada input number */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>

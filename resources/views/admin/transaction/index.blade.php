@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
 <div class="container mx-auto">
-    <h1 class="text-2xl font-semibold mb-4">Transactions</h1>
+    <h1 class="text-2xl font-semibold mb-4">Pesanan Pembeli</h1>
     <table class="table-auto min-w-full">
         <thead>
             <tr>
@@ -16,5 +16,8 @@
             <!-- Data transactions will be generated here -->
         </tbody>
     </table>
+    <div id="detailTransactionModal" class="hidden"></div>
+ 
 </div>
+
 @endsection

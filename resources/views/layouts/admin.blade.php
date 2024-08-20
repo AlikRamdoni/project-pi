@@ -24,7 +24,10 @@
 
                 {{-- transaction-button --}}
                 <div>
-                    <button onclick="showTransaction()">Transaksi</button>
+                    <button onclick="showTransaction()">Pemesanan</button>
+                </div>
+                <div>
+                    <button onclick="showResults()">Transaksi</button>
                 </div>
                 
             </div>
@@ -69,6 +72,113 @@
                 });
         }
 
+        async function showResults() {
+            const response = await fetch('/admin/result');
+
+            const result = await response.text();
+
+            document.getElementById('content').innerHTML = result;
+        }
+
+        async function showDetailTransactionModal(userId) {
+    try {
+        // Fetch detail transaksi
+        const response = await fetch(`/admin/transactions/${userId}`);
+        const data = await response.json();
+
+        // Hitung total harga
+        let totalPrice = 0;
+        data.forEach(item => {
+            totalPrice += item.menu.price * item.quantity;
+        });
+
+        console.log(data);
+
+        // Tampilkan modal
+        const modal = document.getElementById('detailTransactionModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('fixed');
+        modal.innerHTML = `
+            <div class="flex justify-center items-center bg-gray-900 bg-opacity-50 fixed top-0 left-0 bottom-0 right-0 max-h-screen">
+                <div class="bg-white rounded-lg p-8">
+                    <h2 class="text-2xl font-bold mb-4">Detail Transaksi</h2>
+                    <h3>Nama: ${data[0]?.user?.name}</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="py-2">Nama Produk</th>
+                                <th class="py-2">Jumlah</th>
+                                <th class="py-2">Harga</th>
+                                <th class="py-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-transaction-data"></tbody>
+                    </table>
+                    <div class="mt-4 flex justify-between">
+                        <h3 class="text-xl font-semibold">Total Harga: </h3>
+                        <h1 class="font-bold">Rp ${totalPrice}</h1>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button class="bg-green-500 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded" onclick="deleteTransactionUser(${userId}, ${totalPrice})">Selesai</button>
+                        <button class="bg-red-500 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded" onclick="closeDetailTransactionModal()">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Isi tabel detail transaksi
+        const detailTransactionTable = document.getElementById('detail-transaction-data');
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="border px-4 py-2">${item.menu.name}</td>
+                <td class="border px-4 py-2">${item.quantity}</td>
+                <td class="border px-4 py-2">Rp.${item.menu.price}</td>
+                <td class="border px-4 py-2">Rp.${item.menu.price * item.quantity}</td>
+            `;
+            detailTransactionTable.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching transaction details:', error);
+    }
+}
+
+
+    async function deleteTransactionUser(userId, totalPrice) {
+    try {
+        console.log("delete transaction", userId, totalPrice);
+        const response = await fetch(`/admin/transactions/delete/${userId}/t/${totalPrice}`, );
+
+        console.log("delete transaction", await response.json());
+
+
+
+        // Lakukan sesuatu dengan hasilnya jika diperlukan
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        closeDetailTransactionModal();
+        fetchTransactionContent();
+    }
+}
+
+
+
+        async function getDetailTransaction(userId) {
+           
+            console.log(data);
+            return data[0];
+        }
+
+
+        function closeDetailTransactionModal() {
+            const modal = document.getElementById('detailTransactionModal');
+            modal.classList.remove('fixed');
+            modal.classList.add('hidden');
+        }
+
+
+
         async function fetchTransactions() {
 
             try {
@@ -98,7 +208,7 @@
                 <td class="border px-4 py-2">${element[0].user.id}</td>
                 <td class="border px-4 py-2">${element[0].user.name}</td>
                 <td class="border px-4 py-2">${totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
-                <td class="border px-4 py-2"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Detail</button></td>
+                <td class="border px-4 py-2"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded" onclick="showDetailTransactionModal(${element[0].user.id})">Lihat</button></td>
                 `;
                     trxTable.appendChild(row);
                 });
@@ -121,6 +231,9 @@
         document.getElementById('closeModal').addEventListener('click', function() {
             toggleModal();
         });
+
+        
     </script>
+
 </body>
 </html>

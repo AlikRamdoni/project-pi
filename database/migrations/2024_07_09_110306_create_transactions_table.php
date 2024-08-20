@@ -10,10 +10,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('menu_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
-            $table->decimal('total_price', 8, 2);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->integer('total_price');
             $table->timestamps();
         });
     }

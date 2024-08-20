@@ -87,9 +87,9 @@
                 {{-- <x-responsive-nav-link :href="route('find')">
                     Find Us
                 </x-responsive-nav-link> --}}
-                <x-responsive-nav-link :href="route('profile.edit')">
+                {{-- <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
 
 
 

@@ -15,16 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('menus_id');
+
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('menus_id')->constrained()->onDelete('cascade');
+            
             $table->integer('quantity')->default(1);
             $table->timestamps();
-
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('menus_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
-            $table->timestamps();
             
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('menus_id')->references('id')->on('menus')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('menus_id')->references('id')->on('menus')->onDelete('cascade');
         });
     }
 

@@ -17,18 +17,6 @@
             </div>
         </header>
 
-        {{-- <!-- Sidebar (Opsional) -->
-        <aside class="bg-gray-700 text-white py-4">
-            <div class="container mx-auto px-4">
-                <ul>
-                    <li><a href="{{ route('admin.dashboard') }}" class="block py-2">Dashboard</a></li>
-                    <li><a href="{{ route('admin.products.index') }}" class="block py-2">Products</a></li>
-                    <li><a href="{{ route('admin.transactions.index') }}" class="block py-2">Transactions</a></li>
-                    <!-- Tambahkan link untuk menu lainnya jika ada -->
-                </ul>
-            </div>
-        </aside> --}}
-
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto p-4">
             @yield('content')
